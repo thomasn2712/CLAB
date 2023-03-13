@@ -97,8 +97,7 @@ def upload():
         cursor.execute(''' INSERT INTO Tabs (Tablature, idSong) VALUES(%s,%s)''',(songnotes, songID))
         mysql.connection.commit()
         cursor.close()
-        print(Tscript)
-    return "hi"
+    return Tscript
 
 @app.route('/display')
 def display():
