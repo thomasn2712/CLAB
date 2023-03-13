@@ -6,7 +6,7 @@ from flask_mysqldb import MySQL
 from werkzeug.utils import secure_filename
 import random
 import MySQLdb
-
+from flask_cors import CORS, cross_origin
 import os
 
 import extractNotes
@@ -75,21 +75,13 @@ def validateEmail(email):
     else: 
         return 0
     
-@app.route('/data')
-def data():
-    return {
-        'Name':"geek", 
-        "Age":"22",
-        "programming":"python"
-        }
-  
     
 
 @app.route('/form')
 def form():
     return render_template('form.html')
 
-@app.route('/app', methods = ['POST', 'GET'])
+@app.route('/upload', methods = ['POST', 'GET'])
 def upload():
     if request.method == 'POST':
         f = request.files.get('file')
@@ -105,7 +97,8 @@ def upload():
         cursor.execute(''' INSERT INTO Tabs (Tablature, idSong) VALUES(%s,%s)''',(songnotes, songID))
         mysql.connection.commit()
         cursor.close()
-    return render_template('app.html')
+        print(Tscript)
+    return "hi"
 
 @app.route('/display')
 def display():
@@ -113,7 +106,7 @@ def display():
             var = session["var"]
             print (var)
             with open('RawNotes/RawNotes-tab.txt', 'r') as f: 
-                return render_template('display.html', var=f.read())
+                return f.read()
         else:
             return render_template('display.html', var ='no data in session')
 
