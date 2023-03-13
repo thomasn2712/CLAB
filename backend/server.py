@@ -86,7 +86,7 @@ def upload():
     if request.method == 'POST':
         f = request.files.get('file')
         f.save(os.path.join(app.config['UPLOADED_PATH'], f.filename))
-        print(f)
+
         notes = extractNotes.midiConvert(f.filename)
         Tscript = extractNotes.run(notes)
 
